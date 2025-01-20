@@ -1,0 +1,39 @@
+{
+    "schedule": [
+        {
+            "event": "Morning Exercise",
+            "start_datetime": "2025-01-21T07:00",
+            "end_datetime": "2025-01-21T09:00",
+            "latitude": "37.5665",
+            "longitude": "126.9780"
+        },
+        {
+            "event": "Team Meeting",
+            "start_datetime": "2025-01-21T10:00",
+            "end_datetime": "2025-01-21T13:00",
+            "latitude": "37.5665",
+            "longitude": "126.9780"
+        },
+        {
+            "event": "Lunch with Client",
+            "start_datetime": "2025-01-21T13:00",
+            "end_datetime": "2025-01-21T14:00",
+            "latitude": "37.5665",
+            "longitude": "126.9780"
+        },
+        {
+            "event": "Going to Busan",
+            "start_datetime": "2025-01-21T15:00",
+            "end_datetime": "2025-01-21T16:00",
+            "latitude": "35.1796",
+            "longitude": "129.0756"
+        },
+        {
+            "event": "Evening Walk",
+            "start_datetime": "2025-01-21T19:00",
+            "end_datetime": "2025-01-21T20:00",
+            "latitude": "35.1796",
+            "longitude": "129.0756"
+        }
+    ]
+}
