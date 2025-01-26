@@ -1,0 +1,13 @@
+{
+    "schedule": [
+        {
+            "event": "Morning Run",
+            "start_time": "06:00",
+            "end_time": "07:00",
+            "region": "Seoul",
+            "condition": "Cloudy",
+            "temperature": "4°C",
+            "humidity": "44%"
+        }
+    ]
+}

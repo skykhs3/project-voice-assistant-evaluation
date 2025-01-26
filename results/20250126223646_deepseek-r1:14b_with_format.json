@@ -1,0 +1,15 @@
+{
+    "schedule": [
+        {
+            "event": "Family Gathering",
+            "start_time": "2025-01-26 18:00",
+            "end_time": "2025-01-27 01:00"
+        ,
+            "region": "Seoul, South Korea"
+        , "condition": "windy"
+        , "temperature": "warm"
+        , "humidity": "high"
+        }
+    ]
+}
+    		    	  							

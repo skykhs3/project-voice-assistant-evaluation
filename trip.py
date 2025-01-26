@@ -144,7 +144,7 @@ def save_file(model_name,file_name, content):
         file.write(content)
 
     
-def main(model_name="phi4"):
+def main(model_name="deepseek-r1:14b"):
     trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
     weather_data = load_json_file(WEATHER_FILE)
 
