@@ -1,0 +1,72 @@
+{
+    "related_weather": {
+        "2025-01-24": {
+            "morning": {
+                "description": "Sunny",
+                "temperature": "4°C",
+                "humidity": "44%"
+            },
+            "afternoon": {
+                "description": "Cloudy",
+                "temperature": "4°C",
+                "humidity": "44%"
+            },
+            "evening": {
+                "description": "Sunny",
+                "temperature": "4°C",
+                "humidity": "44%"
+            }
+        },
+        "2025-01-25": {
+            "morning": {
+                "description": "Sunny",
+                "temperature": "5°C",
+                "humidity": "45%"
+            },
+            "afternoon": {
+                "description": "Cloudy",
+                "temperature": "5°C",
+                "humidity": "45%"
+            },
+            "evening": {
+                "description": "Sunny",
+                "temperature": "5°C",
+                "humidity": "45%"
+            }
+        },
+        "2025-01-26": {
+            "morning": {
+                "description": "Sunny",
+                "temperature": "6°C",
+                "humidity": "46%"
+            },
+            "afternoon": {
+                "description": "Cloudy",
+                "temperature": "6°C",
+                "humidity": "46%"
+            },
+            "evening": {
+                "description": "Sunny",
+                "temperature": "6°C",
+                "humidity": "46%"
+            }
+        },
+        "2025-01-27": {
+            "morning": {
+                "description": "Sunny",
+                "temperature": "7°C",
+                "humidity": "47%"
+            },
+            "afternoon": {
+                "description": "Cloudy",
+                "temperature": "7°C",
+                "humidity": "47%"
+            },
+            "evening": {
+                "description": "Sunny",
+                "temperature": "7°C",
+                "humidity": "47%"
+            }
+        }
+    }
+}

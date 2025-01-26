@@ -1,5 +1,6 @@
 import requests
 import json
+from datetime import datetime
 
 # Constants
 TODAY_DATE = "2025-01-21T09:00"
@@ -15,12 +16,19 @@ def load_json_file(file_path):
 def generate_prompt(today, schedule_data, weather_data):
     """Generate the prompt for the model."""
     precondition = f"""
-    오늘은 {today}입니다.
-    일정: {schedule_data}
-    날씨: {weather_data}
+    You are an intelligent assistant that provides schedule updates and weather information. Based on the following input, provide an accurate response.
+
+    Today' date:
+    {today}
+
+    Schedules:
+    {schedule_data}
+    
+    Weather:
+    {weather_data}
     """
-    utterance = "오늘 내 일정과 관련된 날씨 알려줘"
-    return precondition + utterance
+    user_input = "Tell me about the weather for my schedule."
+    return precondition, user_input
 
 def define_response_format():
     """Define the desired response format."""
@@ -34,7 +42,7 @@ def define_response_format():
         "required": ["related_weather"]
     }
 
-def build_request_payload(model, prompt, response_format):
+def build_request_payload(model, prompt, response_format=None):
     """Build the request payload for the API."""
     return {
         "model": model,
@@ -49,7 +57,6 @@ def send_request_to_api(payload):
         response = requests.post(API_URL, json=payload)
         response.raise_for_status()
         parsed_data = response.json()
-        print("Response:", json.dumps(parsed_data["response"], indent=4, ensure_ascii=False))
 
         return parsed_data["response"]
 
@@ -58,22 +65,86 @@ def send_request_to_api(payload):
     except requests.exceptions.RequestException as error:
         print("Request error:", error)
 
-def verify_response(response):
-    return True
+def verify_response_llm_as_a_judge(model, assistant_response, precondition, user_input):
+    prompt="""You are an evaluation expert tasked with verifying the quality of a voice assistant's response based on given user input, assistant response, preconditions, and a defined checklist. Your role is to determine how well the assistant's response aligns with both the user query and the checklist criteria. Assign a score from 1 to 5, where 1 indicates a poor response and 5 indicates a perfect response. Provide a detailed explanation for your evaluation.
 
+**Instructions:**
+
+1. Read the provided **User Input** and the **Assistant Response**.
+2. Refer to the **Precondition** (the contextual data or facts the assistant has access to).
+3. Review the **Checklist** for specific response criteria.
+4. Evaluate the assistant's response based on the checklist and assign a score from 1 to 5:
+   - **5 (Excellent):** Fully satisfies all checklist criteria.
+   - **4 (Good):** Satisfies most checklist criteria, with only minor issues.
+   - **3 (Average):** Partially satisfies the checklist, with noticeable gaps or errors.
+   - **2 (Poor):** Barely satisfies the checklist, with significant errors or omissions.
+   - **1 (Very Poor):** Fails to satisfy the checklist and may provide irrelevant or incorrect information.
+5. Provide a clear, concise justification for the score, highlighting both strengths and weaknesses of the response.
+
+**Inputs:**
+
+1. **User Input:** [Input text from the user]
+2. **Assistant Response:** [Response text from the assistant]
+3. **Precondition:** [JSON or other structured data containing relevant context]
+4. **Checklist:** [List of criteria the response should meet]
+
+**Output Format:**
+
+- **Score:** [1-5]
+- **Justification:** [Explain why this score was assigned, referencing the checklist and precondition.]
+
+---
+
+**Example Prompt with Inputs:**
+
+**User Input:**
+{user_input}
+
+**Assistant Response:
+{assistant_response}
+
+**Precondition:**
+{precondition}
+
+**Checklist:**
+1. Does the response include the title of the event(s)?
+2. Does the response provide the start and end times of the event(s)?
+3. Is the information accurate based on the precondition data?
+
+**Output Example:**
+
+- **Score:** 4  
+- **Justification:** The assistant's response includes the title of the event ("dinner appointment") and the start time ("7 PM"), but it does not mention the end time ("10 PM") as specified in the precondition. While the response is accurate and informative, it is slightly incomplete according to the checklist.
+---
+"""
+
+    payload=build_request_payload(model, prompt)
+    response = send_request_to_api(payload)
+    return response
+
+def save_file(model,file_name, content):
+    time = datetime.now().strftime("%Y%m%d%H%M%S")
+    with open(f"results/{time}_{model}_{file_name}", "w") as file:
+        file.write(content)
+
+    
 def main(model="phi4"):
     trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
     weather_data = load_json_file(WEATHER_FILE)
 
-    prompt = generate_prompt(TODAY_DATE, trip_schedule, weather_data)
+    precondition, user_input = generate_prompt(TODAY_DATE, trip_schedule, weather_data)
+
     response_format = define_response_format()
+    request_payload_with_format= build_request_payload(model, precondition+user_input, response_format)
+    assistant_response_with_format = send_request_to_api(request_payload_with_format)
+    save_file(model,"with_format.json",assistant_response_with_format)
 
-    #TODO: Offer other prompts and examine.
-    request_payload = build_request_payload(model, prompt, response_format)
-    response = send_request_to_api(request_payload)
-    verification = verify_response(response)
+    request_payload_without_format= build_request_payload(model, precondition+user_input)
+    assistant_response_without_format = send_request_to_api(request_payload_without_format)
+    save_file(model,"without_format.md",assistant_response_without_format)
 
-    return verification
+    verification = verify_response_llm_as_a_judge("phi4", assistant_response_without_format, precondition, user_input)
+    save_file(model,"llm_verification.md",verification)
 
 if __name__ == "__main__":
-    print(main());
+    main()
