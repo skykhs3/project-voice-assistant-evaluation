@@ -35,17 +35,30 @@ def define_response_format():
     return {
         "type": "object",
         "properties": {
-            "related_weather": {
-                "type": "object"
+            "schedule": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "event": {"type": "string"},
+                        "start_time": {"type": "string"},
+                        "end_time": {"type": "string"},
+                        "region": {"type": "string"},
+                        "condition": {"type": "string"},
+                        "temperature": {"type": "string"},
+                        "humidity": {"type": "string"},
+                    },
+                    "required": ["event", "start_time", "end_time", "region","condition","temperature","humidity"],
+                },
+
             }
         },
-        "required": ["related_weather"]
     }
 
-def build_request_payload(model, prompt, response_format=None):
+def build_request_payload(model_name, prompt, response_format=None):
     """Build the request payload for the API."""
     return {
-        "model": model,
+        "model": model_name,
         "prompt": prompt,
         "format": response_format,
         "stream": False,
@@ -65,7 +78,10 @@ def send_request_to_api(payload):
     except requests.exceptions.RequestException as error:
         print("Request error:", error)
 
-def verify_response_llm_as_a_judge(model, assistant_response, precondition, user_input):
+def verify_response_heuristic_as_a_judge(assistant_response, standard_output):
+    pass
+
+def verify_response_llm_as_a_judge(model_name, assistant_response, precondition, user_input):
     prompt="""You are an evaluation expert tasked with verifying the quality of a voice assistant's response based on given user input, assistant response, preconditions, and a defined checklist. Your role is to determine how well the assistant's response aligns with both the user query and the checklist criteria. Assign a score from 1 to 5, where 1 indicates a poor response and 5 indicates a perfect response. Provide a detailed explanation for your evaluation.
 
 **Instructions:**
@@ -118,33 +134,36 @@ def verify_response_llm_as_a_judge(model, assistant_response, precondition, user
 ---
 """
 
-    payload=build_request_payload(model, prompt)
+    payload=build_request_payload(model_name, prompt)
     response = send_request_to_api(payload)
     return response
 
-def save_file(model,file_name, content):
+def save_file(model_name,file_name, content):
     time = datetime.now().strftime("%Y%m%d%H%M%S")
-    with open(f"results/{time}_{model}_{file_name}", "w") as file:
+    with open(f"results/{time}_{model_name}_{file_name}", "w") as file:
         file.write(content)
 
     
-def main(model="phi4"):
+def main(model_name="phi4"):
     trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
     weather_data = load_json_file(WEATHER_FILE)
 
-    precondition, user_input = generate_prompt(TODAY_DATE, trip_schedule, weather_data)
+    precondition, user_input= generate_prompt(TODAY_DATE, trip_schedule, weather_data)
+    standard_output = "The weather for your schedule is sunny with a temperature of 75°F."
 
     response_format = define_response_format()
-    request_payload_with_format= build_request_payload(model, precondition+user_input, response_format)
+    request_payload_with_format= build_request_payload(model_name, precondition+user_input, response_format)
     assistant_response_with_format = send_request_to_api(request_payload_with_format)
-    save_file(model,"with_format.json",assistant_response_with_format)
+    save_file(model_name,"with_format.json",assistant_response_with_format)
 
-    request_payload_without_format= build_request_payload(model, precondition+user_input)
+    verification = verify_response_heuristic_as_a_judge(assistant_response_with_format, standard_output)
+
+    request_payload_without_format= build_request_payload(model_name, precondition+user_input)
     assistant_response_without_format = send_request_to_api(request_payload_without_format)
-    save_file(model,"without_format.md",assistant_response_without_format)
+    save_file(model_name,"without_format.md",assistant_response_without_format)
 
     verification = verify_response_llm_as_a_judge("phi4", assistant_response_without_format, precondition, user_input)
-    save_file(model,"llm_verification.md",verification)
+    save_file(model_name,"llm_verification.md",verification)
 
 if __name__ == "__main__":
     main()
