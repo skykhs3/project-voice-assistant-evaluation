@@ -1,61 +1,79 @@
 import requests
 import json
 
-today = "2025-01-21T09:00"
-url = "http://localhost:11434/api/generate"
-model = "llama3.1:8b"
-trip_schedule_json = "trip_schedule_data.json"
-weather_json = "weather_data.json"
-utterance = "오늘 내 일정과 관련된 날씨 알려줘"
+# Constants
+TODAY_DATE = "2025-01-21T09:00"
+API_URL = "http://localhost:11434/api/generate"
+TRIP_SCHEDULE_FILE = "trip_schedule_data.json"
+WEATHER_FILE = "weather_data.json"
 
-def create_request_body():
-    with open(weather_json, "r") as f:
-        weather_data = json.load(f)
-    with open(trip_schedule_json, "r") as f:
-        schedule_data = json.load(f) 
+def load_json_file(file_path):
+    """Load JSON data from a file."""
+    with open(file_path, "r") as file:
+        return json.load(file)
+
+def generate_prompt(today, schedule_data, weather_data):
+    """Generate the prompt for the model."""
     precondition = f"""
     오늘은 {today}입니다.
     일정: {schedule_data}
     날씨: {weather_data}
     """
+    utterance = "오늘 내 일정과 관련된 날씨 알려줘"
+    return precondition + utterance
 
-    data = {
-        "model": model,
-        "prompt": precondition+utterance,
-        "format": {
-            "type": "object",
-            "properties": {
-                "related_weather": {
-                    "type": "object"
-                }
-            },
-            "required": ["related_weather"]
+def define_response_format():
+    """Define the desired response format."""
+    return {
+        "type": "object",
+        "properties": {
+            "related_weather": {
+                "type": "object"
+            }
         },
-        "stream": True,
+        "required": ["related_weather"]
     }
 
-    return data
+def build_request_payload(model, prompt, response_format):
+    """Build the request payload for the API."""
+    return {
+        "model": model,
+        "prompt": prompt,
+        "format": response_format,
+        "stream": False,
+    }
 
-def requset_data(body):
+def send_request_to_api(payload):
+    """Send a request to the API and handle the response."""
     try:
-        response = requests.post(url, json=body, stream=True)  # stream=True 설정
+        response = requests.post(API_URL, json=payload)
+        response.raise_for_status()
+        parsed_data = response.json()
+        print("Response:", json.dumps(parsed_data["response"], indent=4, ensure_ascii=False))
 
-        print("Streaming response:")
-        for chunk in response.iter_lines(decode_unicode=True):
-            if chunk:
-                try:
-                    parsed_chunk = json.loads(chunk)
-                    print(parsed_chunk["response"],end="")
-                except json.JSONDecodeError as e:
-                    print("JSON Decode Error:", e)
+        return parsed_data["response"]
 
-    except json.JSONDecodeError as e:
-        print("JSONDecodeError:", e)
-    except requests.exceptions.RequestException as e:
-        print("Request error:", e)
+    except json.JSONDecodeError as error:
+        print("JSON Decode Error:", error)
+    except requests.exceptions.RequestException as error:
+        print("Request error:", error)
 
-def main():
-    body = create_request_body()
-    requset_data(body)
+def verify_response(response):
+    return True
 
-main()
+def main(model="phi4"):
+    trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
+    weather_data = load_json_file(WEATHER_FILE)
+
+    prompt = generate_prompt(TODAY_DATE, trip_schedule, weather_data)
+    response_format = define_response_format()
+
+    #TODO: Offer other prompts and examine.
+    request_payload = build_request_payload(model, prompt, response_format)
+    response = send_request_to_api(request_payload)
+    verification = verify_response(response)
+
+    return verification
+
+if __name__ == "__main__":
+    print(main());
