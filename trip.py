@@ -19,15 +19,22 @@ def generate_prompt(today, schedule_data, weather_data):
     You are an intelligent assistant that provides schedule updates and weather information. Based on the following input, provide an accurate response.
 
     Today' date:
-    {today}
+    ```{today}```
 
     Schedules:
-    {schedule_data}
+    ```{schedule_data}```
     
     Weather:
-    {weather_data}
+    ```{weather_data}```
+
+    Task:
+    - For each scheduled event, match it with the corresponding weather data based on date, time, and location.
+    - Provide specific weather details (e.g., condition, temperature, humidity) for each event.
+    - Highlight any adverse weather conditions (e.g., rain, extreme cold) and suggest precautions or adjustments if necessary.
+    - Summarize the overall weather trends for the day, and optionally suggest the best times for outdoor activities.
+
     """
-    user_input = "Tell me about the weather for my schedule."
+    user_input = "Tell me about the weather for my schedule"
     return precondition, user_input
 
 def define_response_format():
@@ -40,15 +47,15 @@ def define_response_format():
                 "items": {
                     "type": "object",
                     "properties": {
-                        "event": {"type": "string"},
-                        "start_time": {"type": "string"},
-                        "end_time": {"type": "string"},
+                        "event_name": {"type": "string"},
+                        "start_datetime": {"type": "string"},
+                        "end_datetime": {"type": "string"},
                         "region": {"type": "string"},
                         "condition": {"type": "string"},
                         "temperature": {"type": "string"},
                         "humidity": {"type": "string"},
                     },
-                    "required": ["event", "start_time", "end_time", "region","condition","temperature","humidity"],
+                    "required": ["event_name", "start_datetime", "end_datetime", "region","condition","temperature","humidity"],
                 },
 
             }
@@ -139,31 +146,31 @@ def verify_response_llm_as_a_judge(model_name, assistant_response, precondition,
     return response
 
 def save_file(model_name,file_name, content):
-    time = datetime.now().strftime("%Y%m%d%H%M%S")
-    with open(f"results/{time}_{model_name}_{file_name}", "w") as file:
+    
+    with open(f"results/{model_name}_{file_name}", "w") as file:
         file.write(content)
 
     
-def main(model_name="deepseek-r1:14b"):
+def main(model_name="llama3"):
     trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
     weather_data = load_json_file(WEATHER_FILE)
 
     precondition, user_input= generate_prompt(TODAY_DATE, trip_schedule, weather_data)
     standard_output = "The weather for your schedule is sunny with a temperature of 75°F."
 
+    time = datetime.now().strftime("%Y%m%d%H%M")
     response_format = define_response_format()
     request_payload_with_format= build_request_payload(model_name, precondition+user_input, response_format)
     assistant_response_with_format = send_request_to_api(request_payload_with_format)
-    save_file(model_name,"with_format.json",assistant_response_with_format)
-
-    verification = verify_response_heuristic_as_a_judge(assistant_response_with_format, standard_output)
+    verification_json = verify_response_heuristic_as_a_judge(assistant_response_with_format, standard_output)
+    save_file(model_name,f"{time}_with_format.json",assistant_response_with_format)
 
     request_payload_without_format= build_request_payload(model_name, precondition+user_input)
     assistant_response_without_format = send_request_to_api(request_payload_without_format)
-    save_file(model_name,"without_format.md",assistant_response_without_format)
+    save_file(model_name,f"{time}_without_format.md",assistant_response_without_format)
 
     verification = verify_response_llm_as_a_judge("phi4", assistant_response_without_format, precondition, user_input)
-    save_file(model_name,"llm_verification.md",verification)
+    save_file(model_name,f"{time}_llm_verification.md",verification)
 
 if __name__ == "__main__":
     main()

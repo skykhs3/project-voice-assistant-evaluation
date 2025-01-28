@@ -1,0 +1,76 @@
+{
+  "schedule": [
+    {
+      "event_name": "Morning Exercise",
+      "start_datetime": "2025-01-21T06:00",
+      "end_datetime": "2025-01-21T08:00",
+      "region": "Seoul",
+      "condition": "Clear",
+      "temperature": "11°C",
+      "humidity": "60%"
+    },
+    {
+      "event_name": "Team Meeting",
+      "start_datetime": "2025-01-21T09:30",
+      "end_datetime": "2025-01-21T11:00",
+      "region": "Seoul",
+      "condition": "Clear",
+      "temperature": "12°C",
+      "humidity": "55%"
+    },
+    {
+      "event_name": "Lunch with Client",
+      "start_datetime": "2025-01-21T13:00",
+      "end_datetime": "2025-01-21T14:30",
+      "region": "Seoul",
+      "condition": "Rainy",
+      "temperature": "10°C",
+      "humidity": "75%"
+    },
+    {
+      "event_name": "Project Presentation",
+      "start_datetime": "2025-01-21T16:00",
+      "end_datetime": "2025-01-21T17:30",
+      "region": "Seoul",
+      "condition": "Rainy",
+      "temperature": "9°C",
+      "humidity": "80%"
+    },
+    {
+      "event_name": "Dinner with Family",
+      "start_datetime": "2025-01-21T19:00",
+      "end_datetime": "2025-01-21T20:30",
+      "region": "Busan",
+      "condition": "Sunny",
+      "temperature": "14°C",
+      "humidity": "45%"
+    },
+    {
+      "event_name": "Train Journey",
+      "start_datetime": "2025-01-22T08:00",
+      "end_datetime": "2025-01-22T10:30",
+      "region": "Seoul to Busan",
+      "condition": "Cloudy",
+      "temperature": "13°C",
+      "humidity": "60%"
+    },
+    {
+      "event_name": "Cultural Tour",
+      "start_datetime": "2025-01-22T11:00",
+      "end_datetime": "2025-01-22T14:00",
+      "region": "Busan",
+      "condition": "Sunny",
+      "temperature": "18°C",
+      "humidity": "50%"
+    },
+    {
+      "event_name": "Return Trip Home",
+      "start_datetime": "2025-01-22T16:00",
+      "end_datetime": "2025-01-22T19:30",
+      "region": "Busan to Seoul",
+      "condition": "Rainy",
+      "temperature": "15°C",
+      "humidity": "70%"
+    }
+  ]
+}

@@ -53,54 +53,6 @@
             "start_datetime": "2025-01-22T19:00",
             "end_datetime": "2025-01-22T20:00",
             "region": "Busan"
-        },
-        {
-            "event": "Morning Exercise",
-            "start_datetime": "2025-01-23T06:00",
-            "end_datetime": "2025-01-23T08:00",
-            "region": "Busan"
-        },
-        {
-            "event": "Team Meeting",
-            "start_datetime": "2025-01-23T09:00",
-            "end_datetime": "2025-01-23T12:00",
-            "region": "Busan"
-        },
-        {
-            "event": "Lunch with Family",
-            "start_datetime": "2025-01-23T13:00",
-            "end_datetime": "2025-01-23T14:00",
-            "region": "Busan"
-        },
-        {
-            "event": "Travel to Next City",
-            "start_datetime": "2025-01-23T15:00",
-            "end_datetime": "2025-01-23T17:00",
-            "region": "Gwangju"
-        },
-        {
-            "event": "Evening Walk",
-            "start_datetime": "2025-01-23T19:00",
-            "end_datetime": "2025-01-23T20:00",
-            "region": "Gwangju"
-        },
-        {
-            "event": "Lunch",
-            "start_datetime": "2025-01-24T13:00",
-            "end_datetime": "2025-01-24T14:00",
-            "region": "Gwangju"
-        },
-        {
-            "event": "비행기로 이동",
-            "start_datetime": "2025-01-24T15:00",
-            "end_datetime": "2025-01-24T19:00",
-            "region": "Jeju"
-        },
-        {
-            "event": "흑돼지 먹기",
-            "start_datetime": "2025-01-24T19:00",
-            "end_datetime": "2025-01-24T20:00",
-            "region": "Jeju"
         }
     ]
 }
