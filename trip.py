@@ -9,12 +9,6 @@ from utils import (
     verify_response_llm_as_a_judge,
 )
 
-TODAY_DATE = "2025-01-21T09:00"
-API_URL = "http://localhost:11434/api/generate"
-TRIP_SCHEDULE_FILE = "trip_schedule_data.json"
-WEATHER_FILE = "weather_data.json"
-LLM_JUDGE = "phi4"
-
 
 def generate_prompt(today, schedule_data, weather_data):
     precondition = f"""You are an intelligent assistant that provides schedule updates and weather information. Based on the following input, provide an accurate response.
@@ -74,13 +68,14 @@ def define_response_format():
 class TestWeatherScheduleAssistant(unittest.TestCase):
 
     @classmethod
-    def setUpClass(cls):
-
-        cls.trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
-        cls.weather_data = load_json_file(WEATHER_FILE)
-        cls.today_date = TODAY_DATE
-        cls.model_name = "phi4"
+    def configure(cls, trip_schedule, weather_data, today_date, model_name, response_format, generated_prompt):
+        cls.trip_schedule = trip_schedule
+        cls.weather_data = weather_data
+        cls.today_date = today_date
+        cls.model_name = model_name
         cls.start_datetime = datetime.now().strftime("%Y%m%d%H%M")
+        cls.response_format = response_format
+        cls.generated_prompt = generated_prompt
 
     def test_generate_prompt(self):
 
@@ -148,4 +143,15 @@ class TestWeatherScheduleAssistant(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    TODAY_DATE = "2025-01-21T09:00"
+    API_URL = "http://localhost:11434/api/generate"
+    TRIP_SCHEDULE_FILE = "trip_schedule_data.json"
+    WEATHER_FILE = "weather_data.json"
+    LLM_JUDGE = "phi4"
+    MODEL_NAME = "phi4"
+
+    trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
+    weather_data = load_json_file(WEATHER_FILE)
+    TestWeatherScheduleAssistant.configure(trip_schedule, weather_data, TODAY_DATE, MODEL_NAME, define_response_format(), generate_prompt(TODAY_DATE, trip_schedule, weather_data))
+
     unittest.main()
