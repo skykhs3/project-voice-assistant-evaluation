@@ -1,5 +1,6 @@
 import unittest
 from datetime import datetime
+import json
 
 from utils import (
     build_request_payload,
@@ -7,6 +8,7 @@ from utils import (
     save_file,
     send_request_to_api,
     verify_response_llm_as_a_judge,
+    json_similarity,
 )
 
 
@@ -47,8 +49,8 @@ def define_response_format():
                         "end_datetime": {"type": "string"},
                         "region": {"type": "string"},
                         "condition": {"type": "string"},
-                        "temperature": {"type": "string"},
-                        "humidity": {"type": "string"},
+                        "temperature": {"type": "number"},
+                        "humidity": {"type": "number"},
                     },
                     "required": [
                         "event_name",
@@ -68,9 +70,19 @@ def define_response_format():
 class TestWeatherScheduleAssistant(unittest.TestCase):
 
     @classmethod
-    def configure(cls, trip_schedule, weather_data, today_date, model_name, response_format, generated_prompt):
+    def configure(
+        cls,
+        trip_schedule,
+        weather_data,
+        weather_trip_data,
+        today_date,
+        model_name,
+        response_format,
+        generated_prompt,
+    ):
         cls.trip_schedule = trip_schedule
         cls.weather_data = weather_data
+        cls.weather_trip_data = weather_trip_data
         cls.today_date = today_date
         cls.model_name = model_name
         cls.start_datetime = datetime.now().strftime("%Y%m%d%H%M")
@@ -112,6 +124,14 @@ class TestWeatherScheduleAssistant(unittest.TestCase):
             "json",
         )
 
+        score = json_similarity(json.loads(response_field), self.weather_trip_data)
+        save_file(
+            self.model_name,
+            f"{self.start_datetime}_score",
+            score,
+            "json",
+        )
+
     def test_send_request_without_format(self):
         print("Testing send_request_without_format:")
         precondition, user_input = generate_prompt(
@@ -147,11 +167,25 @@ if __name__ == "__main__":
     API_URL = "http://localhost:11434/api/generate"
     TRIP_SCHEDULE_FILE = "trip_schedule_data.json"
     WEATHER_FILE = "weather_data.json"
+    TRIP_WEATHER_FILE = "trip_weather_schedule_data.json"
     LLM_JUDGE = "phi4"
-    MODEL_NAME = "phi4"
+    MODEL_NAME = ["phi4", "deepseek-r1:14b", "llama3"]
 
-    trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
-    weather_data = load_json_file(WEATHER_FILE)
-    TestWeatherScheduleAssistant.configure(trip_schedule, weather_data, TODAY_DATE, MODEL_NAME, define_response_format(), generate_prompt(TODAY_DATE, trip_schedule, weather_data))
-
-    unittest.main()
+    for model_name in MODEL_NAME:
+        trip_schedule = load_json_file(TRIP_SCHEDULE_FILE)
+        weather_data = load_json_file(WEATHER_FILE)
+        weather_trip_data = load_json_file(TRIP_WEATHER_FILE)
+        TestWeatherScheduleAssistant.configure(
+            trip_schedule,
+            weather_data,
+            weather_trip_data,
+            TODAY_DATE,
+            model_name,
+            define_response_format(),
+            generate_prompt(TODAY_DATE, trip_schedule, weather_data),
+        )
+        unittest.TextTestRunner().run(
+            unittest.defaultTestLoader.loadTestsFromTestCase(
+                TestWeatherScheduleAssistant
+            )
+        )

@@ -1,5 +1,7 @@
 import json
 import requests
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 def build_request_payload(model_name, prompt, response_format=None):
@@ -122,8 +124,45 @@ def save_file(model_name, file_name, content, file_format="json"):
     elif file_format == "md":
         file_path = f"results/{model_name}_{file_name}.md"
         with open(file_path, "w", encoding="utf-8") as file:
-            file.write(
-                content if isinstance(content, str) else str(content)
-            )  # Save as plain text/Markdown
+            file.write(content if isinstance(content, str) else str(content))
     else:
         raise ValueError("Unsupported file format. Use 'json' or 'md'.")
+
+
+def convert_to_hashable(obj):
+    if isinstance(obj, dict):
+        return frozenset((k, convert_to_hashable(v)) for k, v in obj.items())
+    elif isinstance(obj, list):
+        return frozenset(convert_to_hashable(v) for v in obj)
+    else:
+        return obj
+
+
+def jaccard_similarity(json1, json2):
+
+    set1 = convert_to_hashable(json1)
+    set2 = convert_to_hashable(json2)
+
+    intersection = len(set1 & set2)
+    union = len(set1 | set2)
+    return intersection / union if union != 0 else 0
+
+
+def cosine_text_similarity(text1, text2):
+    vectorizer = TfidfVectorizer().fit_transform([text1, text2])
+    similarity_matrix = cosine_similarity(vectorizer)
+    return similarity_matrix[0, 1]
+
+
+def json_similarity(json1, json2):
+    jaccard_sim = jaccard_similarity(json1, json2)
+
+    json1_text = " ".join(map(str, json1.values()))
+    json2_text = " ".join(map(str, json2.values()))
+    cosine_sim = cosine_text_similarity(json1_text, json2_text)
+
+    return {
+        "Jaccard Key Similarity": jaccard_sim,
+        "Cosine Value Similarity": cosine_sim,
+        "Overall Similarity Score": (jaccard_sim + cosine_sim) / 2,
+    }

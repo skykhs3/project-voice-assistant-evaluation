@@ -1,0 +1,31 @@
+{
+    "schedule": [
+        {
+            "event_name": "Morning Meeting",
+            "start_datetime": "2025-01-21 09:00",
+            "end_datetime": "2025-01-21 10:30",
+            "region": "Seoul",
+            "condition": "...",
+            "temperature": 0,
+            "humidity": 0
+        },
+        {
+            "event_name": "Lunch with Colleagues",
+            "start_datetime": "2025-01-21 13:00",
+            "end_datetime": "2025-01-21 14:00",
+            "region": "Seoul",
+            "condition": "...",
+            "temperature": 0,
+            "humidity": 0
+        },
+        {
+            "event_name": "Client Presentation",
+            "start_datetime": "2025-01-21 15:00",
+            "end_datetime": "2025-01-21 17:00",
+            "region": "Seoul",
+            "condition": "...",
+            "temperature": 0,
+            "humidity": 0
+        }
+    ]
+}

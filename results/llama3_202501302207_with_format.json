@@ -1,0 +1,40 @@
+{
+    "schedule": [
+        {
+            "event_name": "Morning Exercise",
+            "start_datetime": "2025-01-21T06:00",
+            "end_datetime": "2025-01-21T08:00",
+            "region": "Seoul",
+            "condition": "Sunny, 11°C, 61% humidity",
+            "temperature": 11,
+            "humidity": 61
+        },
+        {
+            "event_name": "Team Meeting",
+            "start_datetime": "2025-01-21T09:00",
+            "end_datetime": "2025-01-21T10:30",
+            "region": "Seoul",
+            "condition": "Cloudy, 9°C, 62% humidity",
+            "temperature": 9,
+            "humidity": 62
+        },
+        {
+            "event_name": "Lunch Break",
+            "start_datetime": "2025-01-21T12:00",
+            "end_datetime": "2025-01-21T13:30",
+            "region": "Seoul",
+            "condition": "Sunny, 8°C, 62% humidity",
+            "temperature": 8,
+            "humidity": 62
+        },
+        {
+            "event_name": "Project Meeting",
+            "start_datetime": "2025-01-21T14:00",
+            "end_datetime": "2025-01-21T15:30",
+            "region": "Seoul",
+            "condition": "Sunny, 9°C, 62% humidity",
+            "temperature": 9,
+            "humidity": 62
+        }
+    ]
+}
