@@ -1,0 +1,85 @@
+{
+    "schedule": [
+        {
+            "event": "Morning Exercise",
+            "start_datetime": "2025-01-21T06:00",
+            "end_datetime": "2025-01-21T08:00",
+            "region": "Seoul",
+            "condition": "Clear",
+            "temperature": 11,
+            "humidity": 63
+        },
+        {
+            "event": "Team Meeting",
+            "start_datetime": "2025-01-21T09:00",
+            "end_datetime": "2025-01-21T12:00",
+            "region": "Seoul",
+            "condition": "Rainy",
+            "temperature": 7,
+            "humidity": 53
+        },
+        {
+            "event": "Lunch with Client",
+            "start_datetime": "2025-01-21T13:00",
+            "end_datetime": "2025-01-21T14:00",
+            "region": "Seoul",
+            "condition": "Rainy",
+            "temperature": 7,
+            "humidity": 53
+        },
+        {
+            "event": "기차로 이동",
+            "start_datetime": "2025-01-21T15:00",
+            "end_datetime": "2025-01-21T17:00",
+            "region": "Busan",
+            "condition": "Sunny",
+            "temperature": 0,
+            "humidity": 61
+        },
+        {
+            "event": "고기 먹기",
+            "start_datetime": "2025-01-21T19:00",
+            "end_datetime": "2025-01-21T20:00",
+            "region": "Busan",
+            "condition": "Cloudy",
+            "temperature": 13,
+            "humidity": 54         
+        },
+        {
+            "event": "Morning Exercise",
+            "start_datetime": "2025-01-22T06:00",
+            "end_datetime": "2025-01-22T08:00",
+            "region": "Busan",
+            "condition": "Rainy",
+            "temperature": 14,
+            "humidity": 57
+        },
+        {
+            "event": "Online Meeting",
+            "start_datetime": "2025-01-22T09:00",
+            "end_datetime": "2025-01-22T12:00",
+            "region": "Busan",
+            "condition": "Rainy",
+            "temperature": 7,
+            "humidity": 66
+        },
+        {
+            "event": "Lunch with Client",
+            "start_datetime": "2025-01-22T13:00",
+            "end_datetime": "2025-01-22T14:00",
+            "region": "Busan",
+            "condition": "Cloudy",
+            "temperature": 14,
+            "humidity": 44
+        },
+        {
+            "event": "Playing computer games",
+            "start_datetime": "2025-01-22T19:00",
+            "end_datetime": "2025-01-22T20:00",
+            "region": "Busan",
+            "condition": "Sunny",
+            "temperature": -2,
+            "humidity": 65
+        }
+    ]
+}

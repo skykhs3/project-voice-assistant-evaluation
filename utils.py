@@ -1,5 +1,7 @@
 import json
 import requests
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 def build_request_payload(model_name, prompt, response_format=None):
@@ -29,55 +31,76 @@ def verify_response_heuristic_as_a_judge(assistant_response, standard_output):
 def verify_response_llm_as_a_judge(
     api_url, model_name, assistant_response, precondition, user_input
 ):
-    prompt = """You are an evaluation expert tasked with verifying the quality of a voice assistant's response based on given user input, assistant response, preconditions, and a defined checklist. Your role is to determine how well the assistant's response aligns with both the user query and the checklist criteria. Assign a score from 1 to 5, where 1 indicates a poor response and 5 indicates a perfect response. Provide a detailed explanation for your evaluation.
-
-**Instructions:**
-
-1. Read the provided **User Input** and the **Assistant Response**.
-2. Refer to the **Precondition** (the contextual data or facts the assistant has access to).
-3. Review the **Checklist** for specific response criteria.
-4. Evaluate the assistant's response based on the checklist and assign a score from 1 to 5:
-   - **5 (Excellent):** Fully satisfies all checklist criteria.
-   - **4 (Good):** Satisfies most checklist criteria, with only minor issues.
-   - **3 (Average):** Partially satisfies the checklist, with noticeable gaps or errors.
-   - **2 (Poor):** Barely satisfies the checklist, with significant errors or omissions.
-   - **1 (Very Poor):** Fails to satisfy the checklist and may provide irrelevant or incorrect information.
-5. Provide a clear, concise justification for the score, highlighting both strengths and weaknesses of the response.
-
-**Inputs:**
-
-1. **User Input:** [Input text from the user]
-2. **Assistant Response:** [Response text from the assistant]
-3. **Precondition:** [JSON or other structured data containing relevant context]
-4. **Checklist:** [List of criteria the response should meet]
-
-**Output Format:**
-
-- **Score:** [1-5]
-- **Justification:** [Explain why this score was assigned, referencing the checklist and precondition.]
+    prompt = f"""You are an expert evaluator responsible for assessing the quality of a voice assistant's response. Your evaluation must consider multiple aspects, including **accuracy, fluency, semantic coherence, and response diversity**. Your goal is to assign a score for each criterion and provide a detailed justification for the evaluation.
 
 ---
 
-**Example Prompt with Inputs:**
+### **Evaluation Criteria (각 항목별 점수 1~5점 척도)**
 
-**User Input:**
+1. **Accuracy (정확성)**:  
+   - The response correctly reflects the facts from the precondition.
+   - All necessary details (e.g., event title, start/end times, location) are included.
+   - No factual inconsistencies or missing key information.  
+
+2. **Fluency (유창성)**:  
+   - The response is grammatically correct and easy to read.
+   - The wording is natural and human-like rather than robotic.  
+
+3. **Semantic Coherence (의미적 일관성)**:  
+   - The response maintains logical consistency.
+   - It avoids contradictions and ensures smooth transitions.  
+
+4. **Diversity (다양성)**:  
+   - The response uses varied and engaging phrasing rather than repetition.
+   - If multiple events are described, they are well-structured and clearly differentiated.  
+
+---
+
+### **Instructions:**
+1. Review the **User Input**, **Assistant Response**, and **Precondition Data**.
+2. Compare the assistant's response against the **Evaluation Criteria**.
+3. Assign a **score from 1 to 5 for each criterion**:
+   - **5 (Excellent):** Fully meets all criteria.
+   - **4 (Good):** Mostly meets the criteria, with minor issues.
+   - **3 (Average):** Somewhat meets the criteria, but with noticeable gaps.
+   - **2 (Poor):** Significant issues, missing key details or inconsistent information.
+   - **1 (Very Poor):** Fails to meet expectations, highly inaccurate or unhelpful.
+4. Provide a **detailed justification** for each score, explaining any strengths or weaknesses.
+
+---
+
+### **User Input:**
 {user_input}
 
-**Assistant Response:
+### **Assistant Response:**
 {assistant_response}
 
-**Precondition:**
+### **Precondition Data:**
 {precondition}
 
-**Checklist:**
-1. Does the response include the title of the event(s)?
-2. Does the response provide the start and end times of the event(s)?
-3. Is the information accurate based on the precondition data?
+---
 
-**Output Example:**
+### **Checklist Compliance:**
+1. **Event Title Included:** (Yes/No)
+2. **Start and End Time Provided:** (Yes/No)
+3. **Information Accuracy Based on Precondition:** (Yes/No)
 
-- **Score:** 4  
-- **Justification:** The assistant's response includes the title of the event ("dinner appointment") and the start time ("7 PM"), but it does not mention the end time ("10 PM") as specified in the precondition. While the response is accurate and informative, it is slightly incomplete according to the checklist.
+---
+
+### **Final Evaluation**
+
+| Criterion                | Score (1-5) | Justification |
+|--------------------------|------------|--------------|
+| **Accuracy (정확성)**       | [ ]        | [Explain Accuracy] |
+| **Fluency (유창성)**        | [ ]        | [Explain Fluency] |
+| **Semantic Coherence (일관성)** | [ ]        | [Explain Coherence] |
+| **Diversity (다양성)**      | [ ]        | [Explain Diversity] |
+
+---
+
+### **Overall Feedback:**  
+[Summarize the evaluation, highlighting the assistant's strengths and areas for improvement.]
+
 ---
 """
 
@@ -101,8 +124,45 @@ def save_file(model_name, file_name, content, file_format="json"):
     elif file_format == "md":
         file_path = f"results/{model_name}_{file_name}.md"
         with open(file_path, "w", encoding="utf-8") as file:
-            file.write(
-                content if isinstance(content, str) else str(content)
-            )  # Save as plain text/Markdown
+            file.write(content if isinstance(content, str) else str(content))
     else:
         raise ValueError("Unsupported file format. Use 'json' or 'md'.")
+
+
+def convert_to_hashable(obj):
+    if isinstance(obj, dict):
+        return frozenset((k, convert_to_hashable(v)) for k, v in obj.items())
+    elif isinstance(obj, list):
+        return frozenset(convert_to_hashable(v) for v in obj)
+    else:
+        return obj
+
+
+def jaccard_similarity(json1, json2):
+
+    set1 = convert_to_hashable(json1)
+    set2 = convert_to_hashable(json2)
+
+    intersection = len(set1 & set2)
+    union = len(set1 | set2)
+    return intersection / union if union != 0 else 0
+
+
+def cosine_text_similarity(text1, text2):
+    vectorizer = TfidfVectorizer().fit_transform([text1, text2])
+    similarity_matrix = cosine_similarity(vectorizer)
+    return similarity_matrix[0, 1]
+
+
+def json_similarity(json1, json2):
+    jaccard_sim = jaccard_similarity(json1, json2)
+
+    json1_text = " ".join(map(str, json1.values()))
+    json2_text = " ".join(map(str, json2.values()))
+    cosine_sim = cosine_text_similarity(json1_text, json2_text)
+
+    return {
+        "Jaccard Key Similarity": jaccard_sim,
+        "Cosine Value Similarity": cosine_sim,
+        "Overall Similarity Score": (jaccard_sim + cosine_sim) / 2,
+    }

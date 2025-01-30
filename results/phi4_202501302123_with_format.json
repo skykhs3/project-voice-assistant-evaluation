@@ -1,0 +1,85 @@
+{
+    "schedule": [
+        {
+            "event_name": "Morning Exercise",
+            "start_datetime": "2025-01-21T06:00",
+            "end_datetime": "2025-01-21T08:00",
+            "region": "Seoul",
+            "condition": "Clear",
+            "temperature": 11,
+            "humidity": 60
+        },
+        {
+            "event_name": "Team Meeting",
+            "start_datetime": "2025-01-21T09:30",
+            "end_datetime": "2025-01-21T10:30",
+            "region": "Seoul",
+            "condition": "Clear",
+            "temperature": 11,
+            "humidity": 60
+        },
+        {
+            "event_name": "Lunch with Client",
+            "start_datetime": "2025-01-21T12:00",
+            "end_datetime": "2025-01-21T13:30",
+            "region": "Seoul",
+            "condition": "Rainy",
+            "temperature": 8,
+            "humidity": 50
+        },
+        {
+            "event_name": "Project Presentation",
+            "start_datetime": "2025-01-21T15:00",
+            "end_datetime": "2025-01-21T16:30",
+            "region": "Seoul",
+            "condition": "Rainy",
+            "temperature": 8,
+            "humidity": 50
+        },
+        {
+            "event_name": "Dinner with Friends",
+            "start_datetime": "2025-01-21T19:00",
+            "end_datetime": "2025-01-21T21:00",
+            "region": "Seoul",
+            "condition": "Sunny",
+            "temperature": -1,
+            "humidity": 40
+        },
+        {
+            "event_name": "Morning Exercise",
+            "start_datetime": "2025-01-22T06:00",
+            "end_datetime": "2025-01-22T07:30",
+            "region": "Seoul",
+            "condition": "Clear",
+            "temperature": 4,
+            "humidity": 56
+        },
+        {
+            "event_name": "Webinar",
+            "start_datetime": "2025-01-22T09:00",
+            "end_datetime": "2025-01-22T11:00",
+            "region": "Seoul",
+            "condition": "Sunny",
+            "temperature": 13,
+            "humidity": 68
+        },
+        {
+            "event_name": "Lunch with Family",
+            "start_datetime": "2025-01-22T12:30",
+            "end_datetime": "2025-01-22T14:00",
+            "region": "Seoul",
+            "condition": "Rainy",
+            "temperature": 7,
+            "humidity": 69
+        },
+        {
+            "event_name": "Movie Night",
+            "start_datetime": "2025-01-22T18:30",
+            "end_datetime": "2025-01-22T20:30",
+            "region": "Seoul",
+            "condition": "Cloudy",
+            "temperature": 2,
+            "humidity": 64
+        }
+    ]
+}

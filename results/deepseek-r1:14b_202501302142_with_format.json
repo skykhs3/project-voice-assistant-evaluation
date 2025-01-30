@@ -1,0 +1,40 @@
+{
+    "schedule": [
+        {
+            "event_name": "Dinner with friends",
+            "start_datetime": "2025-01-21T19:00",
+            "end_datetime": "2025-01-21T21:30",
+            "region": "Daegu",
+            "condition": "Rainy",
+            "temperature": 7,
+            "humidity": 68
+        },
+        {
+            "event_name": "Gym session",
+            "start_datetime": "2025-01-22T09:00",
+            "end_datetime": "2025-01-22T11:30",
+            "region": "Daegu",
+            "condition": "Cloudy",
+            "temperature": 0,
+            "humidity": 54
+        },
+        {
+            "event_name": "Meeting at library",
+            "start_datetime": "2025-01-22T14:00",
+            "end_datetime": "2025-01-22T16:30",
+            "region": "Daegu",
+            "condition": "Clear",
+            "temperature": 13,
+            "humidity": 45
+        },
+        {
+            "event_name": "Outdoor picnic",
+            "start_datetime": "2025-01-22T17:00",
+            "end_datetime": "2025-01-22T20:30",
+            "region": "Daegu",
+            "condition": "Clear",
+            "temperature": -2,
+            "humidity": 70
+        }
+    ]
+}
