@@ -1,0 +1,253 @@
+{
+    "regions": [
+        {
+            "region": "Seoul",
+            "forecast": [
+                {
+                    "condition": "Clear",
+                    "temperature": "11°C",
+                    "humidity": "63%",
+                    "datetime": "2025-01-21T09:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "7°C",
+                    "humidity": "53%",
+                    "datetime": "2025-01-21T12:00"
+                },
+                {
+                    "condition": "Sunny",
+                    "temperature": "0°C",
+                    "humidity": "61%",
+                    "datetime": "2025-01-21T15:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "13°C",
+                    "humidity": "54%",
+                    "datetime": "2025-01-21T18:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "-1°C",
+                    "humidity": "65%",
+                    "datetime": "2025-01-21T21:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "15°C",
+                    "humidity": "48%",
+                    "datetime": "2025-01-22T00:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "-1°C",
+                    "humidity": "70%",
+                    "datetime": "2025-01-22T03:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "14°C",
+                    "humidity": "57%",
+                    "datetime": "2025-01-22T06:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "7°C",
+                    "humidity": "66%",
+                    "datetime": "2025-01-22T09:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "14°C",
+                    "humidity": "44%",
+                    "datetime": "2025-01-22T12:00"
+                },
+                {
+                    "condition": "Sunny",
+                    "temperature": "11°C",
+                    "humidity": "64%",
+                    "datetime": "2025-01-22T15:00"
+                },
+                {
+                    "condition": "Sunny",
+                    "temperature": "-2°C",
+                    "humidity": "65%",
+                    "datetime": "2025-01-22T18:00"
+                },
+                {
+                    "condition": "Sunny",
+                    "temperature": "11°C",
+                    "humidity": "58%",
+                    "datetime": "2025-01-22T21:00"
+                }
+            ]
+        },
+        {
+            "region": "Busan",
+            "forecast": [
+                {
+                    "condition": "Cloudy",
+                    "temperature": "13°C",
+                    "humidity": "44%",
+                    "datetime": "2025-01-21T09:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "9°C",
+                    "humidity": "45%",
+                    "datetime": "2025-01-21T12:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "8°C",
+                    "humidity": "62%",
+                    "datetime": "2025-01-21T15:00"
+                },
+                {
+                    "condition": "Sunny",
+                    "temperature": "-1°C",
+                    "humidity": "42%",
+                    "datetime": "2025-01-21T18:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "9°C",
+                    "humidity": "62%",
+                    "datetime": "2025-01-21T21:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "7°C",
+                    "humidity": "70%",
+                    "datetime": "2025-01-22T00:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "10°C",
+                    "humidity": "56%",
+                    "datetime": "2025-01-22T03:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "4°C",
+                    "humidity": "42%",
+                    "datetime": "2025-01-22T06:00"
+                },
+                {
+                    "condition": "Sunny",
+                    "temperature": "13°C",
+                    "humidity": "68%",
+                    "datetime": "2025-01-22T09:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "7°C",
+                    "humidity": "69%",
+                    "datetime": "2025-01-22T12:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "2°C",
+                    "humidity": "64%",
+                    "datetime": "2025-01-22T15:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "9°C",
+                    "humidity": "55%",
+                    "datetime": "2025-01-22T18:00"
+                },
+                {
+                    "condition": "Sunny",
+                    "temperature": "8°C",
+                    "humidity": "50%",
+                    "datetime": "2025-01-22T21:00"
+                }
+            ]
+        },
+        {
+            "region": "Daegu",
+            "forecast": [
+                {
+                    "condition": "Rainy",
+                    "temperature": "9°C",
+                    "humidity": "58%",
+                    "datetime": "2025-01-21T09:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "-2°C",
+                    "humidity": "44%",
+                    "datetime": "2025-01-21T12:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "11°C",
+                    "humidity": "46%",
+                    "datetime": "2025-01-21T15:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "-1°C",
+                    "humidity": "70%",
+                    "datetime": "2025-01-21T18:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "7°C",
+                    "humidity": "68%",
+                    "datetime": "2025-01-21T21:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "9°C",
+                    "humidity": "40%",
+                    "datetime": "2025-01-22T00:00"
+                },
+                {
+                    "condition": "Rainy",
+                    "temperature": "10°C",
+                    "humidity": "46%",
+                    "datetime": "2025-01-22T03:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "-2°C",
+                    "humidity": "40%",
+                    "datetime": "2025-01-22T06:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "0°C",
+                    "humidity": "54%",
+                    "datetime": "2025-01-22T09:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "13°C",
+                    "humidity": "45%",
+                    "datetime": "2025-01-22T12:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "8°C",
+                    "humidity": "47%",
+                    "datetime": "2025-01-22T15:00"
+                },
+                {
+                    "condition": "Clear",
+                    "temperature": "-2°C",
+                    "humidity": "70%",
+                    "datetime": "2025-01-22T18:00"
+                },
+                {
+                    "condition": "Cloudy",
+                    "temperature": "11°C",
+                    "humidity": "67%",
+                    "datetime": "2025-01-22T21:00"
+                }
+            ]
+        }
+    ]
+}

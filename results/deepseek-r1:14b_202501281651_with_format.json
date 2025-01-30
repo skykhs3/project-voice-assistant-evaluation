@@ -1,0 +1,15 @@
+{
+    "schedule": [
+        {
+            "event_name": "Meeting with client",
+            "start_datetime": "2025-01-22 14:00:00",
+            "end_datetime": "2025-01-22 16:00:00",
+            "region": "Daegu"
+        ,
+            "condition": "clear",
+            "temperature": "These values are not yet available, but I'll let you know once they're ready."
+        , "humidity": ""
+        }
+    ]
+}
+    							  				

@@ -1,0 +1,103 @@
+{
+    "schedule": [
+        {
+            "event_name": "Morning Exercise",
+            "start_datetime": "2025-01-21T06:00",
+            "end_datetime": "2025-01-21T08:00",
+            "region": "Seoul",
+            "condition": "Clear",
+            "temperature": "11°C",
+            "humidity": "Not available for this time slot"
+        },
+        {
+            "event_name": "Team Meeting",
+            "start_datetime": "2025-01-21T09:30",
+            "end_datetime": "2025-01-21T10:30",
+            "region": "Seoul",
+            "condition": "Clear",
+            "temperature": "11°C",
+            "humidity": "58%"
+        },
+        {
+            "event_name": "Lunch with Client",
+            "start_datetime": "2025-01-21T12:00",
+            "end_datetime": "2025-01-21T13:30",
+            "region": "Seoul",
+            "condition": "Rainy",
+            "temperature": "-2°C",
+            "humidity": "44%"
+        },
+        {
+            "event_name": "Project Presentation",
+            "start_datetime": "2025-01-21T14:00",
+            "end_datetime": "2025-01-21T15:30",
+            "region": "Seoul",
+            "condition": "Clear",
+            "temperature": "11°C",
+            "humidity": "Not available for this time slot"
+        },
+        {
+            "event_name": "Travel to Busan",
+            "start_datetime": "2025-01-21T16:00",
+            "end_datetime": "2025-01-21T18:00",
+            "region": "Seoul",
+            "condition": "Clear",
+            "temperature": "-1°C",
+            "humidity": "70%"
+        },
+        {
+            "event_name": "Dinner in Busan",
+            "start_datetime": "2025-01-21T19:30",
+            "end_datetime": "2025-01-21T21:00",
+            "region": "Busan",
+            "condition": "Sunny",
+            "temperature": "-1°C",
+            "humidity": "42%"
+        },
+        {
+            "event_name": "Morning Jogging",
+            "start_datetime": "2025-01-22T06:00",
+            "end_datetime": "2025-01-22T07:00",
+            "region": "Busan",
+            "condition": "Clear",
+            "temperature": "4°C",
+            "humidity": "42%"
+        },
+        {
+            "event_name": "Work Meeting",
+            "start_datetime": "2025-01-22T09:30",
+            "end_datetime": "2025-01-22T10:30",
+            "region": "Busan",
+            "condition": "Sunny",
+            "temperature": "13°C",
+            "humidity": "68%"
+        },
+        {
+            "event_name": "Lunch Break",
+            "start_datetime": "2025-01-22T12:00",
+            "end_datetime": "2025-01-22T13:30",
+            "region": "Busan",
+            "condition": "Rainy",
+            "temperature": "7°C",
+            "humidity": "69%"
+        },
+        {
+            "event_name": "Afternoon Walk",
+            "start_datetime": "2025-01-22T15:00",
+            "end_datetime": "2025-01-22T16:30",
+            "region": "Busan",
+            "condition": "Cloudy",
+            "temperature": "2°C",
+            "humidity": "64%"
+        },
+        {
+            "event_name": "Evening Relaxation",
+            "start_datetime": "2025-01-22T18:00",
+            "end_datetime": "2025-01-22T19:30",
+            "region": "Busan",
+            "condition": "Clear",
+            "temperature": "9°C",
+            "humidity": "55%"
+        }
+    ]
+}
